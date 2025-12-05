@@ -1,0 +1,44 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Environment Variables (CRITICAL for MongoDB)
+# These contain your MONGO_URI and passwords. NEVER commit them.
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# MongoDB Specifics
+# If you run local backups (mongodump), ignore the dump folder
+dump/
+# If you store local database files in your project (rare, but happens)
+data/
+db/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Testing
+coverage/
+
+# Build outputs (if you use TypeScript for backend)
+dist/
+build/
+
+# Editor config
+.vscode/
+.idea/
+*.swp
+*.ds_store
