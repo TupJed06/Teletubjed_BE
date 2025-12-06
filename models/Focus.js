@@ -19,6 +19,11 @@ const FocusSchema = new mongoose.Schema(
             type:Number,
             default:null,
             required:true
+        },
+        isWeb:{
+            type:Boolean,
+            default:false,
+            required:true
         }
     }
 );

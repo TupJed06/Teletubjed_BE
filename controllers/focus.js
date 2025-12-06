@@ -1,4 +1,17 @@
 const Focus = require('../models/Focus');
+exports.getFocuses = async (req, res, next) => {
+    try {
+        // Find ALL documents in the 'focus' collection
+        const focuses = await Focus.find({ isWeb: false });
+        res.status(200).json({
+            success: true,
+            count: focuses.length,
+            data: focuses
+        });
+    } catch (err) {
+        res.status(400).json({ success: false, message: err.message });
+    }
+};
 
 exports.getFocus = async (req, res, next) => {
     try{
