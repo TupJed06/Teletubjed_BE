@@ -41,6 +41,22 @@ const HistorySchema = new mongoose.Schema(
             type: Date,
             default:null,
         },
+        avgTemp:{
+            type: Number,
+            default:null,
+        },
+        avgLight:{
+            type: Number,
+            default:null,
+        },
+        avgHum:{
+            type: Number,
+            default:null,
+        },
+        focus:{
+            type: Number,
+            default:null,
+        },
         createdAt:{
             type: Date,
         },

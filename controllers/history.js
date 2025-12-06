@@ -90,11 +90,11 @@ exports.createHistory = async (req, res, next) => {
 
 exports.updateHistory = async (req, res, next) => {
     try{
-        let {focusTime,relaxTime,totalRound} = req.body;
-        historyId = req.params.id;
+        let {historyId,avgTemp,avgLight,avgHum,focus} = req.body;
+        // historyId = req.params.id;
         let history = await History.findByIdAndUpdate(
             historyId,
-            { endTime: new Date() ,focusTime,relaxTime,totalRound,updatedAt: new Date() },
+            { avgTemp,avgLight,avgHum,focus,updatedAt: new Date() },
             { new: true, runValidators: true } 
         );
 
@@ -115,6 +115,67 @@ exports.updateHistory = async (req, res, next) => {
     catch (err){
         res.status(500).json({
             success:false,
+            message: `Server Error: ${err.message}`
+        })
+    }
+};
+
+exports.stopFocusSession = async (req, res, next) => {
+    try{
+        let {focusTime,relaxTime,totalRound} = req.body;
+        historyId = req.params.id;
+        let history = await History.findById(historyId);
+        if (!history.endTime === null){
+            return res.status(400).json({
+                success: false,
+                message: `Focus session already stopped`
+            });
+        }
+         history = await History.findByIdAndUpdate(
+            historyId,
+            { endTime: new Date() ,focusTime,relaxTime,totalRound },
+            { new: true, runValidators: true } 
+        );
+
+        if (!history) {
+            return res.status(404).json({
+                success: false,
+                message: `history not found with id of ${historyId}`
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            message: 'Stop Focus Session successfully',
+            data: history
+        });
+
+    }
+    catch (err){
+        res.status(500).json({
+            success:false,
+            message: `Server Error: ${err.message}`
+        })
+    }
+};
+
+exports.getCurrentHistory = async (req, res, next) => {
+    try{
+        // const lastHistory = await History.find().sort({ occasion: -1 }).limit(1)
+        const history = await History.findOne({ endTime: null }).sort({ occasion: -1 })
+        if (!history){
+            return res.status(404).json({
+                success: false,
+                message: `No ongoing focus session found`
+            });
+        }
+        res.status(200).json({
+            success: true,
+            data : history[0]._id
+        })
+    }catch(err){
+        res.status(500).json({
+            success: false,
             message: `Server Error: ${err.message}`
         })
     }

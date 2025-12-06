@@ -1,5 +1,5 @@
 const express = require('express');
-const {getHistory,getSensorsByHistory,getAllHistory,createHistory,updateHistory} = require('../controllers/history');
+const {getHistory,getSensorsByHistory,getAllHistory,createHistory,updateHistory,getCurrentHistory,stopFocusSession} = require('../controllers/history');
 
 const router = express.Router();
 
@@ -11,7 +11,13 @@ router.route('/:id')
     .get(getHistory)
     .put(updateHistory);
 
-router.route('/:id/sensors')
-    .get(getSensorsByHistory);
+// router.route('/:id/sensors')
+//     .get(getSensorsByHistory);
+
+router.route('/currentFocus')
+    .get(getCurrentHistory);
+
+router.route('/stopFocus')
+    .put(stopFocusSession);
 
 module.exports = router;
