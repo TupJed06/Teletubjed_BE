@@ -17,7 +17,7 @@ router.route('/:id')
 router.route('/currentFocus')
     .get(getCurrentHistory);
 
-router.route('/stopFocus')
+router.route('/stopFocus/:id')
     .put(stopFocusSession);
 
 module.exports = router;

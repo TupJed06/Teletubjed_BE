@@ -7,7 +7,7 @@ const FocusSchema = new mongoose.Schema(
             required: true
         },
         focusTime:{
-            type: String,
+            type: Number,
             required: true
         },
         repeatOn:{

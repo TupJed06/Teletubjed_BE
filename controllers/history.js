@@ -90,8 +90,8 @@ exports.createHistory = async (req, res, next) => {
 
 exports.updateHistory = async (req, res, next) => {
     try{
-        let {historyId,avgTemp,avgLight,avgHum,focus} = req.body;
-        // historyId = req.params.id;
+        let {avgTemp,avgLight,avgHum,focus} = req.body;
+        historyId = req.params.id;
         let history = await History.findByIdAndUpdate(
             historyId,
             { avgTemp,avgLight,avgHum,focus,updatedAt: new Date() },
