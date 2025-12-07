@@ -76,11 +76,17 @@ exports.createHistory = async (req, res, next) => {
         });
         const focus = await Focus.findById(focusMode);
         await firebase.ref('session_data').update({
-            command: "START",  
+            command: "START",
+            status: "CALIBRATING", 
             timer_duration: focus.focusTime,    
             relax_duration: focus.relaxTime,  
         });
         await history.save();
+        setTimeout(async () => {
+            await firebase.ref('session_data').update({
+                status: "RUNNING", 
+            });
+        }, 10000);
         res.status(201).json({
             success: true,
             message: 'History created successfully',
