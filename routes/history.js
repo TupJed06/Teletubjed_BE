@@ -6,6 +6,9 @@ const router = express.Router();
 router.route('/')
     .get(getAllHistory)
     .post(createHistory);
+    
+router.route('/currentFocus')
+    .get(getCurrentHistory);
 
 router.route('/:id')
     .get(getHistory)
@@ -14,8 +17,6 @@ router.route('/:id')
 // router.route('/:id/sensors')
 //     .get(getSensorsByHistory);
 
-router.route('/currentFocus')
-    .get(getCurrentHistory);
 
 router.route('/stopFocus/:id')
     .put(stopFocusSession);

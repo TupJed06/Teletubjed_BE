@@ -239,7 +239,7 @@ exports.getCurrentHistory = async (req, res, next) => {
         }
         res.status(200).json({
             success: true,
-            data : history[0]._id
+            data : history.id
         })
     }catch(err){
         res.status(500).json({
