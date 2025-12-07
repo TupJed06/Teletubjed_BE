@@ -2,6 +2,7 @@ const History = require('../models/History');
 const Focus = require('../models/Focus');
 const Sensor = require('../models/Sensor');
 const  firebase = require('../config/firebase');
+const { sendFocusSummary } = require('../utills/sendEmail');
 
 exports.getAllHistory = async (req, res, next) => {
     try{
@@ -218,6 +219,16 @@ exports.stopFocusSession = async (req, res, next) => {
             data: history
         });
 
+        sendFocusSummary(
+                "mailoo.cedt@gmail.com", 
+                "Mailoo", 
+                {
+                    focusTime: history.focusTime,
+                    relaxTime: history.relaxTime,
+                    totalRound: history.totalRound,
+                    focus: history.focus
+                }
+            );
     }
     catch (err){
         res.status(500).json({
