@@ -76,16 +76,16 @@ exports.createHistory = async (req, res, next) => {
         });
         const focus = await Focus.findById(focusMode);
         await firebase.ref('session_data').update({
-            command: "START",
-            status: "CALIBRATING", 
+            command: "START", 
+            active_history_id: history._id,
             timer_duration: focus.focusTime,    
             relax_duration: focus.relaxTime,  
         });
         await history.save();
         setTimeout(async () => {
-            await firebase.ref('session_data').update({
-                status: "RUNNING", 
-            });
+            // await firebase.ref('session_data').update({
+            //     status: "RUNNING", 
+            // });
         }, 10000);
         res.status(201).json({
             success: true,
@@ -202,6 +202,9 @@ exports.stopFocusSession = async (req, res, next) => {
             { endTime: new Date() ,focusTime,relaxTime,totalRound },
             { new: true, runValidators: true } 
         );
+        await firebase.ref('session_data').update({
+            command: "STOP",
+        });
 
         if (!history) {
             return res.status(404).json({
@@ -209,9 +212,6 @@ exports.stopFocusSession = async (req, res, next) => {
                 message: `history not found with id of ${historyId}`
             });
         }
-        await firebase.ref('session_data').update({
-            command: "STOP",   
-        });
         res.status(200).json({
             success: true,
             message: 'Stop Focus Session successfully',
