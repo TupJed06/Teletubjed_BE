@@ -1,5 +1,5 @@
 const express = require('express');
-const {getFocus,updateFocus,getFocuses} = require('../controllers/focus');
+const {getFocus,updateFocus,getFocuses,selectFocusMode} = require('../controllers/focus');
 
 const router = express.Router();
 router.route('/')
@@ -8,4 +8,7 @@ router.route('/')
 router.route('/:id')
     .get(getFocus)
     .put(updateFocus);
+
+router.route('/select')
+    .post(selectFocusMode);
 module.exports = router;
